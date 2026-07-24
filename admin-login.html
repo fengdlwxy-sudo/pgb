@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>移民评估后台 - 管理员登录</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background:
+      linear-gradient(135deg, rgba(15, 30, 60, 0.85) 0%, rgba(20, 45, 80, 0.75) 50%, rgba(30, 20, 50, 0.85) 100%),
+      url('A_premium_investment_immigrati_2026-07-21T05-50-07.png') center/cover no-repeat fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top, rgba(212, 175, 55, 0.1) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(60, 90, 160, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .login-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 400px;
+    max-width: 94vw;
+  }
+
+  .login-card {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 16px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+    padding: 50px 40px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .login-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #1a3a6c, #d4af37);
+  }
+
+  .login-logo {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+  }
+  .login-logo svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .login-card h2 {
+    font-size: 22px;
+    color: #1a3a6c;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+
+  .login-card .sub {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 32px;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    color: #4a5a6e;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid #e3e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #1a1a1a;
+    background: #f7f9fc;
+    transition: all 0.25s ease;
+    font-family: inherit;
+  }
+
+  .input-group input:focus {
+    outline: none;
+    border-color: #2a5298;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+  }
+
+  .input-group input::placeholder {
+    color: #aab2bf;
+  }
+
+  .error-msg {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 6px;
+    min-height: 18px;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  .login-btn {
+    width: 100%;
+    padding: 14px 0;
+    background: linear-gradient(135deg, #1a3a6c 0%, #2a5298 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    box-shadow: 0 6px 18px rgba(26, 58, 108, 0.25);
+  }
+
+  .login-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(26, 58, 108, 0.35);
+  }
+
+  .forgot-hint {
+    margin-top: 18px;
+    font-size: 12px;
+    color: #888;
+  }
+
+  .forgot-hint a {
+    color: #2a5298;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .forgot-hint a:hover {
+    text-decoration: underline;
+  }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: rgba(255, 255, 255, 0.85); }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .shake { animation: shake 0.4s ease; }
+
+  /* ====== 响应式设计 ====== */
+
+  @media (max-width: 768px) {
+    .login-wrapper { max-width: 88vw; }
+    .login-card { padding: 40px 28px 36px; }
+    .login-logo { width: 52px; height: 52px; font-size: 24px; margin-bottom: 16px; }
+    .login-card h2 { font-size: 19px; }
+    .login-card .sub { font-size: 12px; margin-bottom: 24px; }
+    .input-group input { padding: 11px 14px; font-size: 14px; }
+    .login-btn { padding: 13px 0; font-size: 15px; }
+  }
+
+  @media (max-width: 480px) {
+    .login-wrapper { max-width: 94vw; }
+    .login-card { padding: 32px 20px 30px; border-radius: 12px; }
+    .login-card h2 { font-size: 18px; letter-spacing: 1px; }
+    .login-card .sub { font-size: 11px; margin-bottom: 20px; }
+    .input-group { margin-bottom: 16px; }
+    .input-group label { font-size: 12px; }
+    .input-group input { padding: 10px 12px; font-size: 14px; }
+    .login-btn { padding: 12px 0; font-size: 14px; letter-spacing: 1px; }
+    .forgot-hint { font-size: 11px; }
+    .back-link { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-card" id="loginCard">
+    <div class="login-logo">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e8c96a"/>
+            <stop offset="100%" stop-color="#c9a227"/>
+          </linearGradient>
+          <filter id="softGlow2" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <circle cx="50" cy="50" r="46" fill="url(#goldGrad2)"/>
+        <path d="M32 25 L32 75 M68 25 L68 75 M32 50 L68 50"
+              stroke="#ffffff" stroke-width="10" stroke-linecap="round" fill="none" filter="url(#softGlow2)"/>
+        <path d="M32 25 C45 15,55 15,68 25" stroke="#ffffff" stroke-width="3" fill="none" opacity="0.6"/>
+        <path d="M32 75 C45 85,55 85,68 75" stroke="#ffffff" stroke-width="3" fill="none" opacity="0.6"/>
+      </svg>
+    </div>
+    <h2>数据管理后台</h2>
+    <p class="sub">登录以查看客户评估数据</p>
+
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <div class="input-group">
+        <label>管理员账号</label>
+        <input type="text" id="username" placeholder="请输入账号" autocomplete="off" required>
+      </div>
+
+      <div class="input-group">
+        <label>登录密码</label>
+        <input type="password" id="password" placeholder="请输入密码" required>
+        <div class="error-msg" id="errorMsg">账号或密码错误，请重试</div>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginBtn">登 录</button>
+    </form>
+
+    <p class="forgot-hint">
+      <a onclick="showDefaultAccount()">查看默认账号</a>
+    </p>
+  </div>
+
+  <a href="快速移民评估表.html" class="back-link">← 返回评估表</a>
+</div>
+
+<script>
+  // 默认管理员账户
+  const DEFAULT_ADMIN = {
+    username: 'admin',
+    password: 'Admin6363'
+  };
+
+  // 初始化或更新默认管理员账户（密码变更时自动同步）
+  const stored = JSON.parse(localStorage.getItem('admin_account') || 'null');
+  if (!stored || stored.password !== DEFAULT_ADMIN.password) {
+    localStorage.setItem('admin_account', JSON.stringify(DEFAULT_ADMIN));
+  }
+
+  // 检查是否已登录（10分钟有效期）
+  const session = JSON.parse(localStorage.getItem('admin_session') || 'null');
+  if (session && session.expires > Date.now()) {
+    window.location.href = 'admin-dashboard.html';
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const loginCard = document.getElementById('loginCard');
+    const errorMsg = document.getElementById('errorMsg');
+    const loginBtn = document.getElementById('loginBtn');
+
+    const account = JSON.parse(localStorage.getItem('admin_account'));
+
+    if (username === account.username && password === account.password) {
+      // 登录成功
+      loginBtn.textContent = '正在登录...';
+      loginBtn.style.pointerEvents = 'none';
+
+      // 保存 session（10分钟有效）
+      const session = {
+        username: username,
+        loginTime: Date.now(),
+        expires: Date.now() + 10 * 60 * 1000
+      };
+      localStorage.setItem('admin_session', JSON.stringify(session));
+
+      setTimeout(() => {
+        window.location.href = 'admin-dashboard.html';
+      }, 500);
+    } else {
+      errorMsg.classList.add('show');
+      loginCard.classList.add('shake');
+      setTimeout(() => loginCard.classList.remove('shake'), 400);
+    }
+  }
+
+  function showDefaultAccount() {
+    const account = JSON.parse(localStorage.getItem('admin_account'));
+    alert(`默认账号：${account.username}\n默认密码：${account.password}\n\n建议首次登录后修改密码。`);
+  }
+</script>
+
+</body>
+</html>

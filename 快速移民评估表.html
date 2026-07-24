@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快速移民评估表 - 为您量身定制私人移民方案</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background:
+      linear-gradient(135deg, rgba(15, 30, 60, 0.75) 0%, rgba(20, 45, 80, 0.65) 50%, rgba(30, 20, 50, 0.75) 100%),
+      url('A_premium_investment_immigrati_2026-07-21T05-50-07.png') center/cover no-repeat fixed;
+    min-height: 100vh;
+    padding: 30px 16px 60px;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(60, 90, 160, 0.18) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  /* 顶部标题 */
+  .page-header {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 28px;
+    padding: 20px 0 10px;
+  }
+
+  .page-header .logo-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #d4af37;
+    font-size: 13px;
+    letter-spacing: 4px;
+    margin-bottom: 14px;
+    font-weight: 300;
+  }
+
+  .page-header .logo-line::before,
+  .page-header .logo-line::after {
+    content: "";
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d4af37);
+  }
+
+  .page-header .logo-line::after {
+    background: linear-gradient(90deg, #d4af37, transparent);
+  }
+
+  .brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .brand-header .brand-logo {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+  }
+  .brand-header .brand-logo svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .brand-header .brand-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #d4af37;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .page-header h1 {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #f5d97c 50%, #d4af37 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .page-header .subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+  }
+
+  /* 咨询热线 */
+  .contact-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .contact-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 50px;
+    padding: 10px 24px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .contact-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 4px;
+  }
+  .contact-label::before {
+    content: "📞";
+    font-size: 14px;
+  }
+  .contact-phone {
+    font-size: 17px;
+    font-weight: 600;
+    color: #f5d97c;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+  .contact-phone:hover {
+    color: #fff;
+    background: rgba(212, 175, 55, 0.2);
+    text-shadow: 0 0 10px rgba(245, 217, 124, 0.5);
+  }
+  .contact-divider {
+    color: rgba(212, 175, 55, 0.5);
+    font-size: 14px;
+    margin: 0 2px;
+  }
+
+  /* 表单卡片 */
+  .form-card {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 16px;
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+  }
+
+  .form-banner {
+    background: linear-gradient(135deg, #1a3a6c 0%, #2a5298 100%);
+    padding: 18px 30px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid #d4af37;
+  }
+
+  .form-banner .banner-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .form-banner .banner-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #d4af37, #f5d97c);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .form-banner .banner-text h2 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .form-banner .banner-text p {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 2px;
+  }
+
+  .form-banner .secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+
+  .form-banner .secure-badge::before {
+    content: "🔒";
+    font-size: 13px;
+  }
+
+  /* 表单内容 */
+  .form-content {
+    padding: 36px 40px 20px;
+  }
+
+  .form-field {
+    margin-bottom: 30px;
+  }
+
+  .form-field:last-of-type {
+    margin-bottom: 10px;
+  }
+
+  .field-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a3a6c;
+    margin-bottom: 8px;
+  }
+
+  .field-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: linear-gradient(135deg, #1a3a6c, #2a5298);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .required-star {
+    color: #e74c3c;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .field-hint {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 14px;
+    padding-left: 34px;
+  }
+
+  /* 选项容器 */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    padding-left: 34px;
+  }
+
+  .options-grid.compact {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .option-item {
+    position: relative;
+  }
+
+  .option-item input[type="checkbox"],
+  .option-item input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 14px;
+    background: #f7f9fc;
+    border: 1.5px solid #e3e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #3a4a5e;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+    user-select: none;
+    line-height: 1.4;
+  }
+
+  .option-label:hover {
+    border-color: #2a5298;
+    background: #eef3fb;
+    transform: translateY(-1px);
+  }
+
+  .option-item input:checked + .option-label {
+    background: linear-gradient(135deg, #1a3a6c, #2a5298);
+    border-color: #d4af37;
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(26, 58, 108, 0.25);
+  }
+
+  .option-item input:disabled + .option-label {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #f0f0f0;
+  }
+
+  .option-item input:disabled + .option-label:hover {
+    transform: none;
+    border-color: #e3e8f0;
+    background: #f0f0f0;
+  }
+
+  /* 文本输入 */
+  .text-input,
+  .textarea-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e3e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: #f7f9fc;
+    transition: all 0.25s ease;
+    font-family: inherit;
+  }
+
+  .text-input {
+    margin-left: 34px;
+    max-width: 320px;
+  }
+
+  .textarea-input {
+    margin-left: 34px;
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  .text-input:focus,
+  .textarea-input:focus {
+    outline: none;
+    border-color: #2a5298;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+  }
+
+  .text-input::placeholder,
+  .textarea-input::placeholder {
+    color: #aab2bf;
+  }
+
+  /* 姓名/手机 行 */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+    margin-left: 34px;
+  }
+
+  .form-row .text-input {
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  /* 选择计数提示 */
+  .selection-counter {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 12px;
+    color: #2a5298;
+    font-weight: 500;
+    background: #eef3fb;
+    padding: 2px 10px;
+    border-radius: 12px;
+  }
+
+  .selection-counter.full {
+    background: #fff3cd;
+    color: #b8860b;
+  }
+
+  /* 提交按钮 */
+  .submit-area {
+    text-align: center;
+    padding: 30px 40px 40px;
+    background: linear-gradient(180deg, transparent, #f7f9fc);
+    border-top: 1px solid #eef2f7;
+  }
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 240px;
+    padding: 16px 50px;
+    background: linear-gradient(135deg, #1a3a6c 0%, #2a5298 50%, #d4af37 150%);
+    background-size: 200% 200%;
+    background-position: 0% 0%;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(26, 58, 108, 0.3);
+    font-family: inherit;
+  }
+
+  .submit-btn:hover {
+    background-position: 100% 100%;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(26, 58, 108, 0.4);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .submit-btn::after {
+    content: "→";
+    font-size: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .submit-btn:hover::after {
+    transform: translateX(4px);
+  }
+
+  .submit-tip {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #888;
+  }
+
+  .submit-tip span {
+    color: #e74c3c;
+  }
+
+  /* 承诺区块 */
+  .commitment {
+    margin: 0 40px 30px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #f7f9fc 0%, #eef3fb 100%);
+    border-left: 3px solid #d4af37;
+    border-radius: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .commitment-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #d4af37, #f5d97c);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a3a6c;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .commitment-content h4 {
+    color: #1a3a6c;
+    font-size: 15px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .commitment-content p {
+    color: #5a6a7e;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* 成功提示 */
+  .success-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 30, 60, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+
+  .success-modal.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .success-content {
+    background: #fff;
+    padding: 50px 60px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 440px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, #d4af37, #f5d97c);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #fff;
+  }
+
+  .success-content h3 {
+    color: #1a3a6c;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .success-content p {
+    color: #5a6a7e;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .success-content button {
+    padding: 10px 32px;
+    background: linear-gradient(135deg, #1a3a6c, #2a5298);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ====== 响应式设计 ====== */
+
+  /* 平板横屏 (769px - 1024px) */
+  @media (max-width: 1024px) {
+    .page-header h1 { font-size: 32px; }
+    .page-header .subtitle { font-size: 14px; }
+    .form-content { padding: 28px 30px 16px; }
+    .options-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); padding-left: 28px; }
+    .options-grid.compact { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); padding-left: 28px; }
+    .field-hint { padding-left: 28px; }
+    .text-input { margin-left: 28px; }
+    .textarea-input { margin-left: 28px; }
+    .form-row { margin-left: 28px; }
+    .commitment { margin: 0 28px 30px; }
+    .submit-area { padding: 24px 28px 30px; }
+  }
+
+  /* 平板竖屏 (481px - 768px) */
+  @media (max-width: 768px) {
+    body { padding: 20px 12px 40px; }
+    .page-header { margin-bottom: 20px; padding: 12px 0 6px; }
+    .page-header .logo-line { font-size: 11px; letter-spacing: 3px; gap: 6px; }
+    .page-header .logo-line::before,
+    .page-header .logo-line::after { width: 20px; }
+    .page-header h1 { font-size: 26px; letter-spacing: 1px; }
+    .brand-header .brand-logo { width: 36px; height: 36px; }
+    .brand-header .brand-text { font-size: 16px; letter-spacing: 2px; }
+    .page-header .subtitle { font-size: 13px; }
+
+    .form-card { border-radius: 12px; }
+    .form-banner { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+    .form-banner .banner-left { gap: 8px; }
+    .form-banner .banner-text h2 { font-size: 15px; }
+    .form-banner .banner-text p { font-size: 11px; }
+    .form-banner .secure-badge { font-size: 11px; padding: 4px 10px; }
+    .form-banner .banner-icon { width: 30px; height: 30px; font-size: 16px; }
+
+    .form-content { padding: 22px 20px 10px; }
+    .form-field { margin-bottom: 22px; }
+    .field-label { font-size: 15px; gap: 6px; flex-wrap: wrap; }
+    .field-number { width: 22px; height: 22px; font-size: 11px; }
+    .field-hint { font-size: 12px; padding-left: 0; margin-bottom: 10px; }
+
+    .options-grid,
+    .options-grid.compact {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding-left: 0;
+    }
+    .option-label {
+      padding: 10px 10px;
+      font-size: 13px;
+      border-radius: 6px;
+    }
+
+    .text-input { max-width: 100%; margin-left: 0; padding: 10px 14px; font-size: 14px; }
+    .textarea-input { margin-left: 0; min-height: 70px; padding: 10px 14px; font-size: 14px; }
+    .form-row { margin-left: 0; }
+
+    .commitment {
+      margin: 0 16px 20px;
+      padding: 12px 14px;
+      gap: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .commitment-content h4 { font-size: 14px; }
+    .commitment-content p { font-size: 12px; }
+
+    .submit-btn {
+      min-width: 180px;
+      padding: 14px 40px;
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+    .submit-area { padding: 20px 16px 24px; }
+    .submit-tip { font-size: 11px; }
+
+    .success-content { padding: 30px 24px; max-width: 90vw; }
+    .success-content h3 { font-size: 18px; }
+    .success-content p { font-size: 13px; }
+    .success-icon { width: 60px; height: 60px; font-size: 30px; }
+
+    .selection-counter { font-size: 11px; padding: 1px 8px; }
+  }
+
+  /* 手机 (320px - 480px) */
+  @media (max-width: 480px) {
+    body { padding: 14px 8px 30px; }
+    .page-header { margin-bottom: 16px; }
+    .page-header h1 { font-size: 22px; }
+    .page-header .subtitle { font-size: 12px; }
+    .page-header .logo-line { font-size: 10px; letter-spacing: 2px; }
+    .brand-header .brand-logo { width: 30px; height: 30px; }
+    .brand-header .brand-text { font-size: 13px; letter-spacing: 1px; }
+
+    .contact-inner { padding: 8px 14px; gap: 4px; }
+    .contact-label { font-size: 11px; }
+    .contact-phone { font-size: 14px; }
+    .contact-divider { display: none; }
+
+    .form-banner { padding: 10px 12px; }
+    .form-banner .banner-text h2 { font-size: 14px; }
+    .form-banner .banner-text p { display: none; }
+    .form-banner .banner-icon { width: 26px; height: 26px; font-size: 14px; border-radius: 6px; }
+    .form-banner .secure-badge { display: none; }
+
+    .form-content { padding: 16px 14px 8px; }
+    .field-label { font-size: 14px; }
+
+    .options-grid,
+    .options-grid.compact {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .option-label {
+      padding: 9px 8px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+
+    .form-row { grid-template-columns: 1fr; gap: 12px; }
+    .text-input, .textarea-input { font-size: 14px; padding: 10px 12px; }
+
+    .submit-btn {
+      min-width: 100%;
+      width: 100%;
+      padding: 14px 30px;
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+    .submit-btn::after { display: none; }
+    .submit-tip { font-size: 11px; }
+
+    .commitment { margin: 0 8px 16px; padding: 10px 12px; }
+    .commitment-icon { width: 28px; height: 28px; font-size: 14px; }
+
+    .success-content { padding: 24px 18px; }
+    .success-content h3 { font-size: 16px; }
+    .success-icon { width: 50px; height: 50px; font-size: 26px; margin-bottom: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- 顶部标题 -->
+  <div class="page-header">
+    <div class="brand-header">
+      <div class="brand-logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e8c96a"/>
+              <stop offset="100%" stop-color="#c9a227"/>
+            </linearGradient>
+            <filter id="softGlow1" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <circle cx="50" cy="50" r="46" fill="url(#goldGrad1)"/>
+          <path d="M32 25 L32 75 M68 25 L68 75 M32 50 L68 50"
+                stroke="#ffffff" stroke-width="10" stroke-linecap="round" fill="none" filter="url(#softGlow1)"/>
+          <path d="M32 25 C45 15,55 15,68 25" stroke="#ffffff" stroke-width="3" fill="none" opacity="0.6"/>
+          <path d="M32 75 C45 85,55 85,68 75" stroke="#ffffff" stroke-width="3" fill="none" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="brand-text">汇程移民</div>
+    </div>
+    <div class="logo-line">GLOBAL IMMIGRATION</div>
+    <h1>快速移民评估表</h1>
+    <p class="subtitle">为您量身定制私人移民方案</p>
+
+    <!-- 咨询热线 -->
+    <div class="contact-bar">
+      <div class="contact-inner">
+        <span class="contact-label">免费咨询热线</span>
+        <a href="tel:13651852270" class="contact-phone">136-5185-2270</a>
+        <span class="contact-divider">|</span>
+        <a href="tel:19901726016" class="contact-phone">199-0172-6016</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 表单卡片 -->
+  <form class="form-card" id="immigrationForm" onsubmit="return handleSubmit(event)">
+
+    <!-- 表单头部 -->
+    <div class="form-banner">
+      <div class="banner-left">
+        <div class="banner-icon">🌐</div>
+        <div class="banner-text">
+          <h2>专属移民方案定制</h2>
+          <p>填写以下信息，专业顾问 24 小时内为您定制方案</p>
+        </div>
+      </div>
+      <div class="secure-badge">信息加密</div>
+    </div>
+
+    <div class="form-content">
+
+      <!-- 1. 意向移民国家 -->
+      <div class="form-field">
+        <div class="field-label">
+          <span class="field-number">1</span>
+          <span>意向移民国家</span>
+          <span class="required-star">*</span>
+          <span class="selection-counter" id="counter-1">0 / 3</span>
+        </div>
+        <div class="field-hint">请选择您意向强的国家，可选择 3 个</div>
+        <div class="options-grid" id="countries">
+          <div class="option-item">
+            <input type="checkbox" name="country" value="美国" id="c1">
+            <label class="option-label" for="c1">美国</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="加拿大" id="c2">
+            <label class="option-label" for="c2">加拿大</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="澳洲" id="c3">
+            <label class="option-label" for="c3">澳洲</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="新西兰" id="c4">
+            <label class="option-label" for="c4">新西兰</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="希腊" id="c5">
+            <label class="option-label" for="c5">希腊</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="土耳其" id="c6">
+            <label class="option-label" for="c6">土耳其</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="马耳他" id="c7">
+            <label class="option-label" for="c7">马耳他</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="爱尔兰" id="c8">
+            <label class="option-label" for="c8">爱尔兰</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="法国" id="c9">
+            <label class="option-label" for="c9">法国</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="塞浦路斯" id="c10">
+            <label class="option-label" for="c10">塞浦路斯</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="英国" id="c11">
+            <label class="option-label" for="c11">英国</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="西班牙" id="c12">
+            <label class="option-label" for="c12">西班牙</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="圣基茨" id="c13">
+            <label class="option-label" for="c13">圣基茨</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="格林纳达" id="c14">
+            <label class="option-label" for="c14">格林纳达</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="多米尼克" id="c15">
+            <label class="option-label" for="c15">多米尼克</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="country" value="安提瓜" id="c16">
+            <label class="option-label" for="c16">安提瓜</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 您的移民目的 -->
+      <div class="form-field">
+        <div class="field-label">
+          <span class="field-number">2</span>
+          <span>您的移民目的</span>
+          <span class="required-star">*</span>
+          <span class="selection-counter" id="counter-2">0 / 3</span>
+        </div>
+        <div class="field-hint">请选择对您重要的目的，多选择 3 个</div>
+        <div class="options-grid" id="purposes">
+          <div class="option-item">
+            <input type="checkbox" name="purpose" value="为了子女教育" id="p1">
+            <label class="option-label" for="p1">为了子女教育</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="purpose" value="为了海外生育" id="p2">
+            <label class="option-label" for="p2">为了海外生育</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="purpose" value="海外医疗福利" id="p3">
+            <label class="option-label" for="p3">海外医疗福利</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="purpose" value="为了养老储备" id="p4">
+            <label class="option-label" for="p4">为了养老储备</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="purpose" value="出入境更方便" id="p5">
+            <label class="option-label" for="p5">出入境更方便</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="purpose" value="经营海外企业" id="p6">
+            <label class="option-label" for="p6">经营海外企业</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="purpose" value="海外置业投资" id="p7">
+            <label class="option-label" for="p7">海外置业投资</label>
+          </div>
+          <div class="option-item">
+            <input type="checkbox" name="purpose" value="海外的居住环境" id="p8">
+            <label class="option-label" for="p8">海外的居住环境</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 您的家庭资产 -->
+      <div class="form-field">
+        <div class="field-label">
+          <span class="field-number">3</span>
+          <span>您的家庭资产</span>
+          <span class="required-star">*</span>
+        </div>
+        <div class="field-hint">包括夫妻双方存款、股票基金、房产和公司股权等，可选择 1 个</div>
+        <div class="options-grid compact" id="assets">
+          <div class="option-item">
+            <input type="radio" name="asset" value="人民币500万及以下" id="a1">
+            <label class="option-label" for="a1">人民币 500 万及以下</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="asset" value="人民币500-1000万" id="a2">
+            <label class="option-label" for="a2">人民币 500-1000 万</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="asset" value="人民币1000-2000万" id="a3">
+            <label class="option-label" for="a3">人民币 1000-2000 万</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="asset" value="人民币2000万以上" id="a4">
+            <label class="option-label" for="a4">人民币 2000 万以上</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 主申请人外语能力 -->
+      <div class="form-field">
+        <div class="field-label">
+          <span class="field-number">4</span>
+          <span>主申请人外语能力</span>
+          <span class="required-star">*</span>
+        </div>
+        <div class="field-hint">请选择 1 个符合您目前的语言能力的选项</div>
+        <div class="options-grid compact" id="languages">
+          <div class="option-item">
+            <input type="radio" name="language" value="完全不会（没有英语基础）" id="l1">
+            <label class="option-label" for="l1">完全不会（没有英语基础）</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="language" value="专业英语8级（雅思7分及以上）" id="l2">
+            <label class="option-label" for="l2">专业英语 8 级（雅思 7 分及以上）</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="language" value="大学英语6级优秀（雅思6分）" id="l3">
+            <label class="option-label" for="l3">大学英语 6 级优秀（雅思 6 分）</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="language" value="大学英语6级（雅思5分）" id="l4">
+            <label class="option-label" for="l4">大学英语 6 级（雅思 5 分）</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="language" value="大学英语4级（雅思4分）" id="l5">
+            <label class="option-label" for="l5">大学英语 4 级（雅思 4 分）</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="language" value="中学英语水平（雅思3分）" id="l6">
+            <label class="option-label" for="l6">中学英语水平（雅思 3 分）</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 可接受海外居住时间 -->
+      <div class="form-field">
+        <div class="field-label">
+          <span class="field-number">5</span>
+          <span>可接受海外居住时间</span>
+          <span class="required-star">*</span>
+        </div>
+        <div class="field-hint">请选择 1 个符合您海外居住的时间要求</div>
+        <div class="options-grid compact" id="residences">
+          <div class="option-item">
+            <input type="radio" name="residence" value="一直居住在移目的国" id="r1">
+            <label class="option-label" for="r1">一直居住在移目的国</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="residence" value="一年中住半年没问题" id="r2">
+            <label class="option-label" for="r2">一年中住半年没问题</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="residence" value="一年中可以住几天" id="r3">
+            <label class="option-label" for="r3">一年中可以住几天</label>
+          </div>
+          <div class="option-item">
+            <input type="radio" name="residence" value="暂时不去居住" id="r4">
+            <label class="option-label" for="r4">暂时不去居住</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. 备注 -->
+      <div class="form-field">
+        <div class="field-label">
+          <span class="field-number">6</span>
+          <span>备注</span>
+        </div>
+        <div class="field-hint">如果您还有其它要说明的可以填写备注里面</div>
+        <textarea class="textarea-input" name="remark" placeholder="请输入您想补充说明的内容..."></textarea>
+      </div>
+
+      <!-- 7 & 8. 姓名 + 手机 -->
+      <div class="form-field">
+        <div class="field-label">
+          <span class="field-number">7</span>
+          <span>联系方式</span>
+          <span class="required-star">*</span>
+        </div>
+        <div class="field-hint">请填写您的真实信息，顾问将主动与您联系</div>
+        <div class="form-row">
+          <div>
+            <input type="text" class="text-input" name="name" placeholder="请输入您的姓名" maxlength="20">
+          </div>
+          <div>
+            <input type="tel" class="text-input" name="phone" placeholder="请输入您的手机号码" maxlength="11">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 承诺 -->
+    <div class="commitment">
+      <div class="commitment-icon">✓</div>
+      <div class="commitment-content">
+        <h4>汇程承诺</h4>
+        <p>您所填写的一切信息将被严格保密，仅用于为您提供专业的移民方案咨询服务，绝不外泄给任何第三方机构。</p>
+      </div>
+    </div>
+
+    <!-- 提交 -->
+    <div class="submit-area">
+      <button type="submit" class="submit-btn">立即获取专属方案</button>
+      <p class="submit-tip">提交后专业顾问将在 <span>24 小时内</span> 与您联系</p>
+    </div>
+
+  </form>
+
+  <!-- 管理员入口 -->
+  <div style="text-align:center;padding:20px;position:relative;z-index:1;">
+    <a href="admin-login.html" style="color:rgba(255,255,255,0.25);font-size:12px;text-decoration:none;">Admin</a>
+  </div>
+
+</div>
+
+<!-- 成功提示弹窗 -->
+<div class="success-modal" id="successModal">
+  <div class="success-content">
+    <div class="success-icon">✓</div>
+    <h3>提交成功</h3>
+    <p>感谢您的填写！专业移民顾问将在 24 小时内通过电话与您联系，为您定制专属移民方案。</p>
+    <button onclick="closeModal()">知道了</button>
+  </div>
+</div>
+
+<script>
+  // 限制多选数量的通用函数
+  function setupMultiSelect(name, maxCount, counterId) {
+    const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
+    const counter = document.getElementById(counterId);
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
+        if (checked.length > maxCount) {
+          cb.checked = false;
+          return;
+        }
+        // 更新计数器
+        counter.textContent = `${checked.length} / ${maxCount}`;
+        if (checked.length === maxCount) {
+          counter.classList.add('full');
+          // 禁用未选中的
+          checkboxes.forEach(box => {
+            if (!box.checked) box.disabled = true;
+          });
+        } else {
+          counter.classList.remove('full');
+          checkboxes.forEach(box => box.disabled = false);
+        }
+      });
+    });
+  }
+
+  setupMultiSelect('country', 3, 'counter-1');
+  setupMultiSelect('purpose', 3, 'counter-2');
+
+  // 表单提交
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    // 校验
+    const countries = document.querySelectorAll('input[name="country"]:checked');
+    const purposes = document.querySelectorAll('input[name="purpose"]:checked');
+    const asset = document.querySelector('input[name="asset"]:checked');
+    const language = document.querySelector('input[name="language"]:checked');
+    const residence = document.querySelector('input[name="residence"]:checked');
+    const name = document.querySelector('input[name="name"]').value.trim();
+    const phone = document.querySelector('input[name="phone"]').value.trim();
+
+    if (countries.length === 0) return showError('请选择意向移民国家');
+    if (purposes.length === 0) return showError('请选择移民目的');
+    if (!asset) return showError('请选择您的家庭资产');
+    if (!language) return showError('请选择主申请人外语能力');
+    if (!residence) return showError('请选择可接受海外居住时间');
+    if (!name) return showError('请输入您的姓名');
+    if (!/^1[3-9]\d{9}$/.test(phone)) return showError('请输入正确的手机号码');
+
+    // 收集表单数据
+    const collectedCountries = [];
+    countries.forEach(cb => collectedCountries.push(cb.value));
+    const collectedPurposes = [];
+    purposes.forEach(cb => collectedPurposes.push(cb.value));
+    const remark = document.querySelector('textarea[name="remark"]').value.trim();
+
+    const submission = {
+      id: Date.now().toString(36) + Math.random().toString(36).substr(2, 6),
+      date: new Date().toLocaleString('zh-CN', { hour12: false }),
+      timestamp: Date.now(),
+      name: name,
+      phone: phone,
+      countries: collectedCountries,
+      purposes: collectedPurposes,
+      asset: asset.value,
+      language: language.value,
+      residence: residence.value,
+      remark: remark,
+      status: 'new'
+    };
+
+    // 保存到 localStorage
+    const submissions = JSON.parse(localStorage.getItem('immigration_submissions') || '[]');
+    submissions.unshift(submission);
+    localStorage.setItem('immigration_submissions', JSON.stringify(submissions));
+
+    // 发送微信通知（Server酱）
+    sendWechatNotification(submission);
+
+    // 显示成功
+    document.getElementById('successModal').classList.add('show');
+  }
+
+  // ========== 微信推送通知（Server酱）==========
+  // 使用说明：
+  // 1. 访问 https://sct.ftqq.com/ 用 GitHub 登录
+  // 2. 关注"方糖"公众号，拿到 SendKey
+  // 3. 把下面的 YOUR_SEND_KEY 替换为你的真实 SendKey
+  // 4. 客户提交后，你的微信会立即收到推送提醒
+  // =============================================
+  const SERVERCHAN_KEY = 'YOUR_SEND_KEY'; // ← 在这里填入你的 SendKey
+
+  function sendWechatNotification(data) {
+    if (SERVERCHAN_KEY === 'YOUR_SEND_KEY' || !SERVERCHAN_KEY) return;
+
+    const title = '【汇程移民】新客户提交评估';
+    const desp = [
+      `**姓名：** ${data.name}`,
+      `**手机：** ${data.phone}`,
+      `**意向国家：** ${data.countries.join('、')}`,
+      `**移民目的：** ${data.purposes.join('、')}`,
+      `**家庭资产：** ${data.asset}`,
+      `**外语能力：** ${data.language}`,
+      `**可居住时间：** ${data.residence}`,
+      data.remark ? `**备注：** ${data.remark}` : '',
+      `**提交时间：** ${data.date}`
+    ].filter(Boolean).join('\n\n');
+
+    // 使用 no-cors 模式避免 CORS 拦截，推送仍然能送达
+    fetch(`https://sctapi.ftqq.com/${SERVERCHAN_KEY}.send?title=${encodeURIComponent(title)}&desp=${encodeURIComponent(desp)}`, {
+      method: 'GET',
+      mode: 'no-cors'
+    }).catch(() => {});
+  }
+
+  function showError(msg) {
+    alert(msg);
+    return false;
+  }
+
+  function closeModal() {
+    document.getElementById('successModal').classList.remove('show');
+    // 重置表单
+    document.getElementById('immigrationForm').reset();
+    document.getElementById('counter-1').textContent = '0 / 3';
+    document.getElementById('counter-2').textContent = '0 / 3';
+    document.getElementById('counter-1').classList.remove('full');
+    document.getElementById('counter-2').classList.remove('full');
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.disabled = false);
+  }
+
+  // 阻止关闭弹窗时页面滚动
+  document.getElementById('successModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>移民评估后台 - 数据管理</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f3f8;
+    color: #1a1a1a;
+  }
+
+  /* ====== 顶部导航 ====== */
+  .topbar {
+    background: linear-gradient(135deg, #1a3a6c, #2a5298);
+    color: #fff;
+    padding: 0 30px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(26, 58, 108, 0.2);
+  }
+
+  .topbar .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .topbar .brand .dot {
+    width: 10px;
+    height: 10px;
+    background: #d4af37;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .topbar-right .user-info {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .btn-logout {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 7px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .btn-logout:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* ====== 主区域 ====== */
+  .main-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 28px 30px;
+  }
+
+  /* ====== 统计卡片 ====== */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 26px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .stat-card:nth-child(1) .stat-icon { background: #f0f4ff; color: #2a5298; }
+  .stat-card:nth-child(2) .stat-icon { background: #fff7e6; color: #d4af37; }
+  .stat-card:nth-child(3) .stat-icon { background: #f0fff4; color: #27ae60; }
+  .stat-card:nth-child(4) .stat-icon { background: #fff0f0; color: #e74c3c; }
+
+  .stat-card .stat-info .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+  }
+
+  .stat-card .stat-info .stat-label {
+    font-size: 13px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  /* ====== 工具栏 ====== */
+  .toolbar {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    position: relative;
+  }
+
+  .search-box input {
+    padding: 9px 14px 9px 36px;
+    border: 1.5px solid #e3e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 240px;
+    background: #f7f9fc;
+    transition: all 0.25s;
+    font-family: inherit;
+    color: #1a1a1a;
+  }
+
+  .search-box input:focus {
+    outline: none;
+    border-color: #2a5298;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.08);
+  }
+
+  .search-box::before {
+    content: "🔍";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .filter-select {
+    padding: 9px 14px;
+    border: 1.5px solid #e3e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1a1a1a;
+    background: #f7f9fc;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .filter-select:focus {
+    outline: none;
+    border-color: #2a5298;
+  }
+
+  .toolbar-right {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-export {
+    padding: 9px 20px;
+    background: #f7f9fc;
+    border: 1.5px solid #e3e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #4a5a6e;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .btn-export:hover {
+    border-color: #2a5298;
+    color: #2a5298;
+  }
+
+  .btn-refresh {
+    padding: 9px 20px;
+    background: linear-gradient(135deg, #1a3a6c, #2a5298);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .btn-refresh:hover { opacity: 0.9; }
+
+  /* ====== 数据表格 ====== */
+  .table-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+  }
+
+  thead th {
+    background: #f7f9fc;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5a6e;
+    border-bottom: 2px solid #eef2f7;
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #1a1a1a;
+    border-bottom: 1px solid #f2f5f9;
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    transition: background 0.15s ease;
+  }
+
+  tbody tr:hover {
+    background: #fafbfd;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .status-badge.new { background: #fff3cd; color: #b8860b; }
+  .status-badge.viewed { background: #e8f0fe; color: #2a5298; }
+  .status-badge.contacted { background: #d4edda; color: #22753a; }
+
+  .country-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .country-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #eef3fb;
+    color: #2a5298;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .action-btns {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-detail, .btn-status, .btn-delete {
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+
+  .btn-detail {
+    background: #eef3fb;
+    color: #2a5298;
+  }
+
+  .btn-detail:hover {
+    background: #2a5298;
+    color: #fff;
+  }
+
+  .btn-status {
+    background: #f0fff4;
+    color: #27ae60;
+  }
+
+  .btn-status:hover {
+    background: #27ae60;
+    color: #fff;
+  }
+
+  .btn-delete {
+    background: #fff0f0;
+    color: #e74c3c;
+  }
+
+  .btn-delete:hover {
+    background: #e74c3c;
+    color: #fff;
+  }
+
+  /* ====== 空状态 ====== */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: #888;
+  }
+
+  .empty-state .empty-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  .empty-state p {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .empty-state .empty-sub {
+    font-size: 13px;
+    color: #aaa;
+  }
+
+  /* ====== 分页 ====== */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-top: 1px solid #f2f5f9;
+    font-size: 13px;
+    color: #888;
+  }
+
+  .pagination-info { color: #666; }
+
+  .pagination-btns {
+    display: flex;
+    gap: 6px;
+  }
+
+  .pagination-btns button {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #e3e8f0;
+    border-radius: 6px;
+    background: #fff;
+    color: #4a5a6e;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+
+  .pagination-btns button:hover:not(:disabled) {
+    border-color: #2a5298;
+    color: #2a5298;
+  }
+
+  .pagination-btns button.active {
+    background: #1a3a6c;
+    color: #fff;
+    border-color: #1a3a6c;
+  }
+
+  .pagination-btns button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* ====== 详情弹窗 ====== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 30, 60, 0.75);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-overlay.show {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal-dialog {
+    background: #fff;
+    border-radius: 14px;
+    width: 640px;
+    max-width: 94vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+    animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.9) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .modal-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid #f2f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #f7f9fc, #fff);
+  }
+
+  .modal-header h3 {
+    font-size: 18px;
+    color: #1a3a6c;
+    font-weight: 600;
+  }
+
+  .modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f7f9fc;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover {
+    background: #f0f0f0;
+    color: #333;
+  }
+
+  .modal-body {
+    padding: 24px 28px 10px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .detail-row {
+    display: flex;
+    margin-bottom: 18px;
+  }
+
+  .detail-label {
+    width: 120px;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: #888;
+    font-weight: 500;
+    padding-top: 1px;
+  }
+
+  .detail-value {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.6;
+    word-break: break-all;
+  }
+
+  .detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .detail-tag {
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #eef3fb, #f0f4ff);
+    color: #2a5298;
+    border-radius: 6px;
+    font-size: 13px;
+    border: 1px solid #d8e4f5;
+  }
+
+  .modal-footer {
+    padding: 16px 28px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .btn-close-modal {
+    padding: 10px 24px;
+    background: #f7f9fc;
+    border: 1px solid #e3e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .btn-save-status {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #1a3a6c, #2a5298);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ====== Toast ====== */
+  .toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #27ae60;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 300;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    display: none;
+    animation: slideDown 0.3s ease;
+  }
+
+  .toast.error { background: #e74c3c; }
+  .toast.show { display: block; }
+
+  @keyframes slideDown {
+    from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
+    to { transform: translateX(-50%) translateY(0); opacity: 1; }
+  }
+
+  /* ====== 删除确认 ====== */
+  .confirm-dialog {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 30, 60, 0.7);
+    z-index: 250;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .confirm-dialog.show { display: flex; }
+
+  .confirm-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    max-width: 380px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .confirm-content .confirm-icon {
+    font-size: 44px;
+    margin-bottom: 14px;
+  }
+
+  .confirm-content h4 {
+    font-size: 17px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+
+  .confirm-content p {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .confirm-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .confirm-btns button {
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+
+  .btn-cancel {
+    background: #f7f9fc;
+    color: #666;
+    border: 1px solid #e3e8f0 !important;
+  }
+
+  .btn-confirm {
+    background: #e74c3c;
+    color: #fff;
+  }
+
+  /* ====== 响应式设计 ====== */
+
+  /* 平板横屏 (769px - 1024px) */
+  @media (max-width: 1024px) {
+    .main-content { padding: 20px 16px; }
+    .stats-row { gap: 12px; }
+    .stat-card { padding: 16px 18px; }
+    .stat-card .stat-icon { width: 40px; height: 40px; font-size: 18px; }
+    .stat-card .stat-info .stat-num { font-size: 24px; }
+    table { min-width: 900px; }
+  }
+
+  /* 平板竖屏 (481px - 768px) */
+  @media (max-width: 768px) {
+    .main-content { padding: 14px 12px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .stat-card { padding: 14px; }
+    .stat-card .stat-icon { width: 36px; height: 36px; font-size: 16px; border-radius: 8px; }
+    .stat-card .stat-info .stat-num { font-size: 22px; }
+    .stat-card .stat-info .stat-label { font-size: 12px; }
+
+    .topbar { padding: 0 14px; height: 52px; }
+    .topbar .brand { font-size: 15px; gap: 8px; }
+    .topbar-right .user-info { font-size: 12px; }
+    .btn-logout { padding: 5px 14px; font-size: 12px; }
+
+    .toolbar { padding: 14px 16px; gap: 10px; }
+    .toolbar-left { width: 100%; flex-direction: column; align-items: stretch; }
+    .toolbar-right { width: 100%; justify-content: space-between; }
+    .search-box { width: 100%; }
+    .search-box input { width: 100%; }
+    .filter-select { width: 100%; }
+    .btn-export, .btn-refresh { padding: 8px 16px; font-size: 12px; }
+
+    table { min-width: 780px; }
+    thead th { padding: 10px 10px; font-size: 11px; }
+    tbody td { padding: 10px 10px; font-size: 13px; }
+    .country-tag { font-size: 11px; padding: 1px 6px; }
+    .action-btns { gap: 4px; }
+    .btn-detail, .btn-status, .btn-delete { padding: 4px 10px; font-size: 11px; }
+
+    .modal-dialog { width: 94vw; max-height: 90vh; }
+    .modal-header { padding: 14px 18px; }
+    .modal-header h3 { font-size: 16px; }
+    .modal-body { padding: 18px 18px 8px; }
+    .detail-row { flex-direction: column; margin-bottom: 14px; }
+    .detail-label { width: 100%; margin-bottom: 4px; }
+    .modal-footer { padding: 12px 18px 18px; }
+
+    .pagination { flex-direction: column; gap: 8px; align-items: flex-start; padding: 12px 16px; }
+    .pagination-info { font-size: 12px; }
+    .pagination-btns button { width: 30px; height: 30px; font-size: 12px; }
+  }
+
+  /* 手机 (320px - 480px) */
+  @media (max-width: 480px) {
+    .main-content { padding: 10px 8px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .stat-card { padding: 12px; gap: 10px; border-radius: 8px; }
+    .stat-card .stat-icon { width: 32px; height: 32px; font-size: 14px; border-radius: 6px; }
+    .stat-card .stat-info .stat-num { font-size: 20px; }
+    .stat-card .stat-info .stat-label { font-size: 11px; }
+
+    .topbar { padding: 0 10px; height: 48px; }
+    .topbar .brand { font-size: 14px; gap: 6px; }
+    .topbar .brand .dot { width: 7px; height: 7px; }
+    .topbar-right { gap: 10px; }
+    .topbar-right .user-info { display: none; }
+    .btn-logout { padding: 5px 12px; font-size: 11px; }
+
+    .toolbar { padding: 10px 12px; gap: 8px; border-radius: 8px; }
+    .btn-export, .btn-refresh { width: 100%; text-align: center; }
+
+    table { min-width: 650px; }
+    thead th { padding: 8px 6px; font-size: 10px; }
+    tbody td { padding: 8px 6px; font-size: 12px; }
+
+    .pagination { padding: 8px 12px; }
+    .pagination-btns { flex-wrap: wrap; justify-content: center; }
+
+    .modal-dialog { width: 96vw; max-height: 92vh; border-radius: 10px; }
+    .modal-header { padding: 12px 14px; }
+    .modal-header h3 { font-size: 15px; }
+    .modal-body { padding: 14px 14px 6px; }
+    .modal-footer { padding: 10px 14px 14px; flex-direction: column; }
+    .modal-footer button { width: 100%; text-align: center; }
+
+    .confirm-content { padding: 24px 18px; max-width: 90vw; }
+    .confirm-btns { flex-direction: column; }
+    .confirm-btns button { width: 100%; }
+
+    .toast { left: 10px; right: 10px; transform: none; text-align: center; font-size: 13px; padding: 10px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部 -->
+<div class="topbar">
+  <div class="brand">
+    <div class="dot"></div>
+    <span>移民评估后台</span>
+  </div>
+  <div class="topbar-right">
+    <span class="user-info" id="loginUser"></span>
+    <button class="btn-logout" onclick="logout()">退出登录</button>
+  </div>
+</div>
+
+<!-- 主区域 -->
+<div class="main-content">
+
+  <!-- 统计卡片 -->
+  <div class="stats-row" id="statsRow"></div>
+
+  <!-- 工具栏 -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="搜索姓名 / 手机号..." oninput="renderTable()">
+      </div>
+      <select class="filter-select" id="countryFilter" onchange="renderTable()">
+        <option value="">全部国家</option>
+      </select>
+      <select class="filter-select" id="purposeFilter" onchange="renderTable()">
+        <option value="">全部目的</option>
+      </select>
+      <select class="filter-select" id="statusFilter" onchange="renderTable()">
+        <option value="">全部状态</option>
+        <option value="new">新提交</option>
+        <option value="viewed">已查看</option>
+        <option value="contacted">已联系</option>
+      </select>
+    </div>
+    <div class="toolbar-right">
+      <button class="btn-export" onclick="exportCSV()">📥 导出 CSV</button>
+      <button class="btn-refresh" onclick="refreshData()">🔄 刷新数据</button>
+    </div>
+  </div>
+
+  <!-- 数据表格 -->
+  <div class="table-card">
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>提交时间</th>
+            <th>姓名</th>
+            <th>手机号</th>
+            <th>意向国家</th>
+            <th>移民目的</th>
+            <th>家庭资产</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="empty-icon">📭</div>
+      <p>暂无评估数据</p>
+      <p class="empty-sub">当有客户提交评估表后，数据将显示在这里</p>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+</div>
+
+<!-- 详情弹窗 -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3>评估详情</h3>
+      <button class="modal-close" onclick="closeDetail()">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-close-modal" onclick="closeDetail()">关闭</button>
+      <button class="btn-save-status" onclick="cycleStatus()">变更状态</button>
+    </div>
+  </div>
+</div>
+
+<!-- 删除确认 -->
+<div class="confirm-dialog" id="confirmDialog">
+  <div class="confirm-content">
+    <div class="confirm-icon">⚠️</div>
+    <h4>确认删除</h4>
+    <p id="confirmMsg">确定要删除这条评估数据吗？此操作不可撤销。</p>
+    <div class="confirm-btns">
+      <button class="btn-cancel" onclick="cancelDelete()">取消</button>
+      <button class="btn-confirm" onclick="confirmDelete()">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ====== 会话校验 ======
+  const session = JSON.parse(localStorage.getItem('admin_session') || 'null');
+  if (!session || session.expires < Date.now()) {
+    localStorage.removeItem('admin_session');
+    window.location.href = 'admin-login.html';
+  }
+  document.getElementById('loginUser').textContent = '👤 ' + session.username;
+
+  // ====== 数据管理 ======
+  let allData = [];
+  let currentPage = 1;
+  let pageSize = 10;
+  let detailItemId = null;
+  let deleteItemId = null;
+
+  function getData() {
+    return JSON.parse(localStorage.getItem('immigration_submissions') || '[]');
+  }
+
+  function saveData(data) {
+    localStorage.setItem('immigration_submissions', JSON.stringify(data));
+  }
+
+  function refreshData() {
+    allData = getData();
+    updateStats();
+    updateFilterOptions();
+    renderTable();
+    showToast('数据已刷新');
+  }
+
+  // ====== 统计卡片 ======
+  function updateStats() {
+    const total = allData.length;
+    const today = new Date().toLocaleDateString('zh-CN');
+    const todayCount = allData.filter(d => d.date.includes(today)).length;
+    const newCount = allData.filter(d => d.status === 'new').length;
+    const contactedCount = allData.filter(d => d.status === 'contacted').length;
+
+    document.getElementById('statsRow').innerHTML = `
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-info">
+          <div class="stat-num">${total}</div>
+          <div class="stat-label">评估总数</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-info">
+          <div class="stat-num">${todayCount}</div>
+          <div class="stat-label">今日新增</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🆕</div>
+        <div class="stat-info">
+          <div class="stat-num">${newCount}</div>
+          <div class="stat-label">待处理</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <div class="stat-num">${contactedCount}</div>
+          <div class="stat-label">已联系</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ====== 筛选选项更新 ======
+  function updateFilterOptions() {
+    const countries = new Set();
+    const purposes = new Set();
+    allData.forEach(d => {
+      d.countries.forEach(c => countries.add(c));
+      d.purposes.forEach(p => purposes.add(p));
+    });
+
+    const cSelect = document.getElementById('countryFilter');
+    cSelect.innerHTML = '<option value="">全部国家</option>';
+    [...countries].sort().forEach(c => {
+      cSelect.innerHTML += `<option value="${c}">${c}</option>`;
+    });
+
+    const pSelect = document.getElementById('purposeFilter');
+    pSelect.innerHTML = '<option value="">全部目的</option>';
+    [...purposes].sort().forEach(p => {
+      pSelect.innerHTML += `<option value="${p}">${p}</option>`;
+    });
+  }
+
+  // ====== 筛选 ======
+  function getFilteredData() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const country = document.getElementById('countryFilter').value;
+    const purpose = document.getElementById('purposeFilter').value;
+    const status = document.getElementById('statusFilter').value;
+
+    return allData.filter(d => {
+      if (search && !d.name.toLowerCase().includes(search) && !d.phone.includes(search)) return false;
+      if (country && !d.countries.includes(country)) return false;
+      if (purpose && !d.purposes.includes(purpose)) return false;
+      if (status && d.status !== status) return false;
+      return true;
+    });
+  }
+
+  // ====== 渲染表格 ======
+  function renderTable() {
+    const filtered = getFilteredData();
+    const totalPages = Math.ceil(filtered.length / pageSize);
+    if (currentPage > totalPages) currentPage = totalPages || 1;
+
+    const start = (currentPage - 1) * pageSize;
+    const pageData = filtered.slice(start, start + pageSize);
+
+    const tbody = document.getElementById('tableBody');
+    const empty = document.getElementById('emptyState');
+    const pagination = document.getElementById('pagination');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      pagination.innerHTML = '';
+    } else {
+      empty.style.display = 'none';
+      tbody.innerHTML = pageData.map((d, idx) => `
+        <tr>
+          <td>${start + idx + 1}</td>
+          <td>${d.date}</td>
+          <td><strong>${escapeHtml(d.name)}</strong></td>
+          <td>${escapeHtml(d.phone)}</td>
+          <td>
+            <div class="country-tags">
+              ${d.countries.slice(0, 3).map(c => `<span class="country-tag">${c}</span>`).join('')}
+              ${d.countries.length > 3 ? `<span class="country-tag">+${d.countries.length - 3}</span>` : ''}
+            </div>
+          </td>
+          <td>${d.purposes.slice(0, 2).join('、')}${d.purposes.length > 2 ? '…' : ''}</td>
+          <td>${d.asset}</td>
+          <td><span class="status-badge ${d.status}">${statusLabel(d.status)}</span></td>
+          <td>
+            <div class="action-btns">
+              <button class="btn-detail" onclick="showDetail('${d.id}')">详情</button>
+              <button class="btn-status" onclick="changeStatus('${d.id}')">${statusNextLabel(d.status)}</button>
+              <button class="btn-delete" onclick="askDelete('${d.id}')">删除</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      // 分页
+      let pagHTML = `<div class="pagination-info">共 ${filtered.length} 条记录，第 ${currentPage}/${totalPages} 页</div>`;
+      pagHTML += '<div class="pagination-btns">';
+      pagHTML += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="goPage(${currentPage - 1})">‹</button>`;
+
+      const maxShow = 5;
+      let startPg = Math.max(1, currentPage - Math.floor(maxShow / 2));
+      let endPg = Math.min(totalPages, startPg + maxShow - 1);
+      if (endPg - startPg < maxShow - 1) startPg = Math.max(1, endPg - maxShow + 1);
+
+      if (startPg > 1) {
+        pagHTML += `<button onclick="goPage(1)">1</button>`;
+        if (startPg > 2) pagHTML += '<button disabled>…</button>';
+      }
+
+      for (let i = startPg; i <= endPg; i++) {
+        pagHTML += `<button class="${i === currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+      }
+
+      if (endPg < totalPages) {
+        if (endPg < totalPages - 1) pagHTML += '<button disabled>…</button>';
+        pagHTML += `<button onclick="goPage(${totalPages})">${totalPages}</button>`;
+      }
+
+      pagHTML += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="goPage(${currentPage + 1})">›</button>`;
+      pagHTML += '</div>';
+      pagination.innerHTML = pagHTML;
+    }
+  }
+
+  function goPage(p) { currentPage = p; renderTable(); }
+
+  // ====== 详情弹窗 ======
+  function showDetail(id) {
+    const item = allData.find(d => d.id === id);
+    if (!item) return;
+
+    detailItemId = id;
+    document.getElementById('modalBody').innerHTML = `
+      <div class="detail-row">
+        <div class="detail-label">提交时间</div>
+        <div class="detail-value">${item.date}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">姓名</div>
+        <div class="detail-value"><strong>${escapeHtml(item.name)}</strong></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">手机号</div>
+        <div class="detail-value">${escapeHtml(item.phone)}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">意向国家</div>
+        <div class="detail-value">
+          <div class="detail-tags">${item.countries.map(c => `<span class="detail-tag">${c}</span>`).join('')}</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">移民目的</div>
+        <div class="detail-value">
+          <div class="detail-tags">${item.purposes.map(p => `<span class="detail-tag">${p}</span>`).join('')}</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">家庭资产</div>
+        <div class="detail-value">${item.asset}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">外语能力</div>
+        <div class="detail-value">${item.language}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">海外居住时间</div>
+        <div class="detail-value">${item.residence}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">备注</div>
+        <div class="detail-value">${item.remark || '<span style="color:#aaa;">无</span>'}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">当前状态</div>
+        <div class="detail-value"><span class="status-badge ${item.status}">${statusLabel(item.status)}</span></div>
+      </div>
+    `;
+
+    document.getElementById('detailModal').classList.add('show');
+
+    // 标记为已查看
+    if (item.status === 'new') {
+      item.status = 'viewed';
+      saveData(allData);
+      updateStats();
+      renderTable();
+    }
+  }
+
+  function closeDetail() {
+    document.getElementById('detailModal').classList.remove('show');
+    detailItemId = null;
+  }
+
+  function cycleStatus() {
+    if (!detailItemId) return;
+    const item = allData.find(d => d.id === detailItemId);
+    if (!item) return;
+    item.status = nextStatus(item.status);
+    saveData(allData);
+    updateStats();
+    renderTable();
+    showDetail(detailItemId);
+    showToast('状态已更新');
+  }
+
+  function changeStatus(id) {
+    const item = allData.find(d => d.id === id);
+    if (!item) return;
+    item.status = nextStatus(item.status);
+    saveData(allData);
+    updateStats();
+    renderTable();
+    showToast('状态已更新');
+  }
+
+  function nextStatus(s) {
+    return s === 'new' ? 'viewed' : s === 'viewed' ? 'contacted' : 'new';
+  }
+
+  function statusLabel(s) {
+    return s === 'new' ? '新提交' : s === 'viewed' ? '已查看' : '已联系';
+  }
+
+  function statusNextLabel(s) {
+    return s === 'new' ? '标已查看' : s === 'viewed' ? '标已联系' : '标新提交';
+  }
+
+  // ====== 删除 ======
+  function askDelete(id) {
+    deleteItemId = id;
+    const item = allData.find(d => d.id === id);
+    document.getElementById('confirmMsg').textContent =
+      `确定要删除"${escapeHtml(item.name)}"（${escapeHtml(item.phone)}）的评估数据吗？此操作不可撤销。`;
+    document.getElementById('confirmDialog').classList.add('show');
+  }
+
+  function cancelDelete() {
+    document.getElementById('confirmDialog').classList.remove('show');
+    deleteItemId = null;
+  }
+
+  function confirmDelete() {
+    allData = allData.filter(d => d.id !== deleteItemId);
+    saveData(allData);
+    updateStats();
+    renderTable();
+    document.getElementById('confirmDialog').classList.remove('show');
+    showToast('已删除');
+    deleteItemId = null;
+  }
+
+  // ====== 导出 CSV ======
+  function exportCSV() {
+    const filtered = getFilteredData();
+    if (filtered.length === 0) {
+      showToast('没有可导出的数据', 'error');
+      return;
+    }
+
+    const headers = ['提交时间', '姓名', '手机号', '意向国家', '移民目的', '家庭资产', '外语能力', '海外居住时间', '备注', '状态'];
+    const labels = { new: '新提交', viewed: '已查看', contacted: '已联系' };
+
+    let csv = '\uFEFF' + headers.join(',') + '\n';
+    filtered.forEach(d => {
+      const row = [
+        d.date, d.name, d.phone,
+        d.countries.join('/'), d.purposes.join('/'),
+        d.asset, d.language, d.residence, d.remark || '', labels[d.status]
+      ].map(v => `"${(v || '').replace(/"/g, '""')}"`).join(',');
+      csv += row + '\n';
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '移民评估数据_' + new Date().toISOString().slice(0, 10) + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('导出成功');
+  }
+
+  // ====== 退出 ======
+  function logout() {
+    if (confirm('确定要退出登录吗？')) {
+      localStorage.removeItem('admin_session');
+      window.location.href = 'admin-login.html';
+    }
+  }
+
+  // ====== Toast ======
+  function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + (type || '') + ' show';
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // ====== 工具 ======
+  function escapeHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  // ====== 初始加载 ======
+  allData = getData();
+  updateStats();
+  updateFilterOptions();
+  renderTable();
+
+  // 点击弹窗外部关闭
+  document.getElementById('detailModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDetail();
+  });
+  document.getElementById('confirmDialog').addEventListener('click', function(e) {
+    if (e.target === this) cancelDelete();
+  });
+
+  // 键盘 ESC 关闭弹窗
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (document.getElementById('detailModal').classList.contains('show')) closeDetail();
+      if (document.getElementById('confirmDialog').classList.contains('show')) cancelDelete();
+    }
+  });
+</script>
+
+</body>
+</html>
