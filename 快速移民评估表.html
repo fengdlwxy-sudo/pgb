@@ -1164,36 +1164,39 @@
     document.getElementById('successModal').classList.add('show');
   }
 
-  // ========== 微信推送通知（Server酱）==========
-  // 使用说明：
-  // 1. 访问 https://sct.ftqq.com/ 用 GitHub 登录
-  // 2. 关注"方糖"公众号，拿到 SendKey
-  // 3. 把下面的 YOUR_SEND_KEY 替换为你的真实 SendKey
-  // 4. 客户提交后，你的微信会立即收到推送提醒
-  // =============================================
-  const SERVERCHAN_KEY = 'YOUR_SEND_KEY'; // ← 在这里填入你的 SendKey
+  // ========== 客户信息直发站长邮箱（Formspree，与 www 站共用收件箱 fengdlinfo@126.com）==========
+  // 说明：FORMSPREE_ID 只是收件箱地址，不是密钥；泄露也不暴露历史客户数据。
+  // 客户填写的姓名/电话/意向国家/目的/资产/外语/居住时间/备注 全部发到邮箱。
+  // ============================================================================================
+  const FORMSPREE_ID = 'xykrvgpq';
 
   function sendWechatNotification(data) {
-    if (SERVERCHAN_KEY === 'YOUR_SEND_KEY' || !SERVERCHAN_KEY) return;
-
-    const title = '【汇程移民】新客户提交评估';
-    const desp = [
-      `**姓名：** ${data.name}`,
-      `**手机：** ${data.phone}`,
-      `**意向国家：** ${data.countries.join('、')}`,
-      `**移民目的：** ${data.purposes.join('、')}`,
-      `**家庭资产：** ${data.asset}`,
-      `**外语能力：** ${data.language}`,
-      `**可居住时间：** ${data.residence}`,
-      data.remark ? `**备注：** ${data.remark}` : '',
-      `**提交时间：** ${data.date}`
-    ].filter(Boolean).join('\n\n');
-
-    // 使用 no-cors 模式避免 CORS 拦截，推送仍然能送达
-    fetch(`https://sctapi.ftqq.com/${SERVERCHAN_KEY}.send?title=${encodeURIComponent(title)}&desp=${encodeURIComponent(desp)}`, {
-      method: 'GET',
-      mode: 'no-cors'
-    }).catch(() => {});
+    if (!FORMSPREE_ID || FORMSPREE_ID === 'YOUR_FORMSPREE_ID') {
+      console.warn('【站长提示】评估表未配置 Formspree ID');
+      return;
+    }
+    const payload = {
+      name: data.name,
+      phone: data.phone,
+      countries: (data.countries || []).join('、'),
+      purposes: (data.purposes || []).join('、'),
+      asset: data.asset,
+      language: data.language,
+      residence: data.residence,
+      remark: data.remark || '',
+      date: data.date,
+      _subject: '[汇程移民-m站评估表] ' + data.name + ' - ' + data.phone,
+      gotcha: ''
+    };
+    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if (!res.ok) console.error('评估表提交失败：', res.status);
+    }).catch(function(err){
+      console.error('评估表提交异常：', err);
+    });
   }
 
   function showError(msg) {
